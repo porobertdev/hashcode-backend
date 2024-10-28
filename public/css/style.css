@@ -1,0 +1,70 @@
+@import 'reset.css';
+@import 'variables.css';
+@import 'header.css';
+@import 'footer.css';
+@import 'animations.css';
+
+body {
+    background-color: var(--bkg-clr);
+    font-family: var(--ff-main);
+}
+
+h1 {
+    margin: 0 auto;
+    width: max-content;
+    padding: var(--pd-title);
+}
+
+main {
+    width: 50%;
+    margin: 0 auto 4rem;
+}
+
+.hidden {
+    display: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 1rem;
+
+    button {
+        cursor: pointer;
+        /* padding: 0.5rem 1rem; */
+        background-color: var(--bkg-cta-clr);
+        font-size: var(--fs-cta);
+
+        &:hover {
+            background-color: var(--bkg-cta-hover-clr);
+            color: var(--bkg-cta-hover-txt-clr);
+        }
+    }
+
+    input,
+    button {
+        border-radius: 6px;
+    }
+
+    button,
+    input,
+    input {
+        padding: var(--pd-input);
+    }
+
+    /* UI Validation */
+    input:valid {
+        border: 3px solid var(--input-valid);
+    }
+    /* input:invalid {
+        border: 1px solid var(--input-invalid);
+    } */
+}
+
+/* RESPONSIVENESS */
+@media only screen and (max-width: 600px) {
+    main {
+        width: 90%;
+    }
+}
