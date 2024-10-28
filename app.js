@@ -2,9 +2,11 @@ const express = require('express');
 const path = require('node:path');
 const { loadEnvConfig } = require('./utils');
 const rootRouter = require('./routes/rootRouter');
+const initializeDB = require('./database/initialize');
 
 // env vars
 loadEnvConfig();
+initializeDB();
 
 const PORT = 3000;
 const app = express();

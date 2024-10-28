@@ -1,4 +1,7 @@
 const { Pool } = require('pg');
+const { loadEnvConfig } = require('../utils');
+
+loadEnvConfig();
 
 module.exports = new Pool({
     host: process.env.DATABASE_HOST,
