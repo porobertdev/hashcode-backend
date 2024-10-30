@@ -1,10 +1,11 @@
 const pool = require('./pool');
 const { TABLE_NAME } = require('./config');
 
-const savePaste = async (codeSnippet, language, url, createdAt, expirationTime) => {
+const savePaste = async (codeSnippet, language, url, expirationTime) => {
+    // Timestamp - As seen here: https://stackoverflow.com/questions/26046816/is-there-a-way-to-set-an-expiry-time-after-which-a-data-entry-is-automaticall
     await pool.query(`
-        INSERT INTO ${TABLE_NAME} (code_snippet, language, url, created_at, expiration_time) VALUES($1, $2, $3, $4, $5)
-        `, [codeSnippet, language, url, createdAt, expirationTime]);
+        INSERT INTO ${TABLE_NAME} (code_snippet, language, url, expiration_time) VALUES($1, $2, $3, NOW() + INTERVAL '${expirationTime} days')
+        `, [codeSnippet, language, url]);
 }
 
 const getPaste = async (pasteID) => {

@@ -8,8 +8,8 @@ const initializeDB = async () => {
         code_snippet TEXT,
         language VARCHAR(20),
         url TEXT,
-        created_at TIMESTAMP WITH TIME ZONE,
-        expiration_time TIMESTAMP WITH TIME ZONE)`);
+        created_at TIMESTAMP DEFAULT NOW(),
+        expiration_time TIMESTAMP)`);
 };
 
 module.exports = initializeDB;

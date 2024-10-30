@@ -21,8 +21,9 @@ module.exports = {
 
     },
     post: async (req, res) => {
+        console.log("🚀 ~ post: ~ req.body:", req.body);
         // extract payload
-        const {code_snippet, language, createdAt, expiration_time} = req.body;
+        const {code_snippet, language, expiration_time} = req.body;
 
         // replace '/' because they mess up with the endpoint
         const hashedUrl = hash(code_snippet).replaceAll('/', '');
@@ -31,12 +32,12 @@ module.exports = {
         const encryptedText = encrypt(code_snippet);
 
         // save it into database
-        await savePaste(encryptedText, language, hashedUrl, createdAt, expiration_time);
+        await savePaste(encryptedText, language, hashedUrl, expiration_time);
 
-        // send JSON to client    
+        // send JSON to client
         res.json({
             message: 'The code snippet was saved successfully!',
-            url: hashedUrl
+            url: hashedUrl,
         });
     },
 };
