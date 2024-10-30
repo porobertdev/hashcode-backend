@@ -13,6 +13,7 @@ const app = express();
 
 // Middleware to save payload data on req.body
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Set routers: no need to specify path since it's root /
 app.use(rootRouter);
