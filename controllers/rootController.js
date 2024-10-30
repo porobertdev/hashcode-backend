@@ -1,3 +1,4 @@
+const { format, isAfter } = require('date-fns');
 const { encrypt, decrypt } = require("../authentication/encrypt");
 const hash = require("../authentication/hash");
 const { savePaste, getPaste } = require("../database/queries");
@@ -8,17 +9,22 @@ module.exports = {
 
         const dbResults = await getPaste(pasteID);
 
-        if (dbResults.length !== 0) {
-            // decrypt
-            dbResults.code_snippet = decrypt(dbResults.code_snippet);
+        try {
+            expiration_time = dbResults[0].expiration_time;
+            const currentDate = format(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS');
 
-            res.json(dbResults[0]);
-        } else {
-            res.json({
-                message: 'Not found.'
-            });
+            if (dbResults.length !== 0) {
+                if (isAfter(new Date(currentDate), expiration_time)) {
+                    throw new Error();
+                } else {      
+                    // decrypt
+                    dbResults.code_snippet = decrypt(dbResults.code_snippet);
+                    res.json(dbResults[0]);
+                }
+            }
+        } catch(err) {
+            res.json({code_snippet: 'Not found: either expired or never existed 😢'})
         }
-
     },
     post: async (req, res) => {
         console.log("🚀 ~ post: ~ req.body:", req.body);
