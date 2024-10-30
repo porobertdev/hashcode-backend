@@ -17,4 +17,8 @@ const getPaste = async (pasteID) => {
     return rows;
 }
 
-module.exports = { savePaste, getPaste };
+const deletePaste = async (pasteID) => {
+    await pool.query(`DELETE FROM ${TABLE_NAME} WHERE url='${pasteID}'`);
+};
+
+module.exports = { savePaste, getPaste, deletePaste };
