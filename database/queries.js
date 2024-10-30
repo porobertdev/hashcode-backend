@@ -21,4 +21,8 @@ const deletePaste = async (pasteID) => {
     await pool.query(`DELETE FROM ${TABLE_NAME} WHERE url='${pasteID}'`);
 };
 
-module.exports = { savePaste, getPaste, deletePaste };
+const deleteExpiredPastes = async () => {
+    await pool.query(`DELETE FROM ${TABLE_NAME} WHERE expiration_time > NOW()`);
+}
+
+module.exports = { savePaste, getPaste, deletePaste, deleteExpiredPastes };
