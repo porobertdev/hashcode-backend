@@ -32,7 +32,7 @@ module.exports = {
         const encryptedText = encrypt(code_snippet);
 
         // save it into database
-        await savePaste(encryptedText, language, hashedUrl, expiration_time);
+        await savePaste(code_snippet, language, hashedUrl, expiration_time);
 
         // send JSON to client
         res.json({
